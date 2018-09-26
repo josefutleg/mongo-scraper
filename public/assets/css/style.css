@@ -1,0 +1,15 @@
+*{
+	font-family: 'Reem Kufi', sans-serif;
+	text-transform: lowercase;
+}
+
+body {
+    background-color: coral;
+}
+
+
+
+.container {
+	margin: auto;
+	/* text-align: center; */
+}
