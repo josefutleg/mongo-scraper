@@ -1,15 +1,98 @@
 *{
 	font-family: 'Reem Kufi', sans-serif;
-	text-transform: lowercase;
+	/* text-transform: lowercase; */
+}
+
+p{
+	text-decoration: none;
 }
 
 body {
+	text-align: center;
+	margin: auto;
     background-color: coral;
 }
 
+.hidden	{
+	display: none;
+}
+
+.messageContainer {
+	text-align: center;
+}
+
+.fa-arrow-alt-circle-down {
+	color: lightgreen;
+	float: right;
+}
+
+.fa-arrow-alt-circle-down:hover {
+	color: lightcoral;
+}
+
+.fa-sticky-note {
+	color: lightblue;
+	float: right;
+	padding-right: 10px;
+}
+
+.fa-sticky-note:hover {
+	color: lightsalmon;
+}
+
+.fa-trash {
+	color: lightcoral;
+	float: right;
+}
+
+.fa-trash:hover {
+	color: lightseagreen;
+}
+
+.results, .savedResults {
+	margin: 0 20% 5%;
+}
 
 
-.container {
-	margin: auto;
-	/* text-align: center; */
+.navContainer {
+	/* background-color: burlywood; */
+	height: 100px;
+	padding: 2% 20%;
+}
+
+#buttonSubmit {
+	text-align: center;
+}
+
+#dataContainer {
+	padding: 10px;
+	border: solid 1px gray;
+}
+
+#delete:hover, #note:hover, #save:hover {
+	cursor: pointer;
+}
+
+#red {
+	color: lightcoral;
+	font-weight: bold;
+}
+
+#scrapeButton {
+	border-color: lightcoral;
+	color: lightcoral;
+}
+
+#scrapeButton:hover {
+	background-color: lightcoral;
+	color: white;
+}
+
+#id	{
+	text-align: center;
+	width: 100%;
+	border: none;
+}
+.hiddenVal {
+	display: none;
 }

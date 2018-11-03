@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+    <header>
+        <% include ../partials/header %>
+    </header>
+    <div class="noteContainer, hidden">
+        <div class="messageContainer">
+            <!-- <div id="title"></div> -->
+            <form method="POST" action="saved/take-in-post-info">
+                <input type="text" id="id" name="savedId" class="hiddenVal"></input>
+                <!-- <input type="text" id="title" name="savedId" class="hiddenVal"></input>                 -->
+                <h4 id="title" name="savedTitle"></h4>
+                <textarea id="description-input" placeholder="add a comment" rows="3" name="description" required></textarea>
+                <br>
+                <button id="buttonSubmit" type="submit">submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="savedResults"></div>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>

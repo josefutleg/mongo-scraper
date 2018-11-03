@@ -1,27 +1,101 @@
-var questions = [
-    'Your mind is always buzzing with unexplored ideas and plans.',
-    'Generally speaking, you rely more on your experience than your imagination.',
-    'You find it easy to stay relaxed and focused even when there is some pressure.',
-    'You rarely do something just out of sheer curiosity.',
-    'People can rarely upset you.',
-    'It is often difficult for you to relate to other people’s feelings.',
-    'In a discussion, truth should be more important than people’s sensitivities.',
-    'You rarely get carried away by fantasies and ideas.',
-    'You think that everyone’s views should be respected regardless of whether they are supported by facts or not.',
-    'You feel more energetic after spending time with a group of people.',
-]
+console.log("hi");
 
-function showSurvery(){
-    var inputName = $('<input>').attr('type', 'text').attr('id', 'name').attr('placeholder', 'your name here');
-    var inputLink = $('<input>').attr('type', 'text').attr('id', 'link').attr('placeholder', 'your link here');
-    var nameHead = $('<h4>').text('Your Name (Required)');
-    var linkHead = $('<h4>').text('Your Photo Link (Required)');
-    
-    $('.user').append(nameHead);
-    $('.user').append(inputName);
-    $('.user').append(inputLink);
-    $('.user').append(linkHead);
-
-    
+function getResults() {
+  $(".results").empty();
+  $.getJSON("/all", function(data) {
+    for (var i = 0; i < data.length; i++) {
+      // console.log(data[i]._id, data[i].link);
+      $(".results").append(
+        `<div id="dataContainer"><p class='data-entry' data-id='${
+          data[i]._id
+        }'><a href='${data[i].link}' target="_blank">${
+          data[i].title
+        }  </a><span id=save><i class="fas fa-arrow-alt-circle-down"></i></span></p></div><br>`
+      );
+    }
+  });
 }
-showSurvery();
+
+getResults();
+
+function getSavedResults() {
+  $(".savedResults").empty();
+  $.getJSON("/all-saved", function(data) {
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].description !== undefined) {
+        $(".savedResults").prepend(
+          `<div id="dataContainer"><p class='data-entry' data-id='${
+            data[i]._id
+          }'><a href='${data[i].link}' target="_blank">${
+            data[i].title
+          }  </a><span id=delete><i class="fas fa-trash"></i></span>  <span id="note"><i class="fas fa-sticky-note"></i></span></p><p>${
+            data[i].description
+          }</p></div><br>`
+        );
+        // if (data[i].description !== undefined) {
+        //   $(".savedResults").prepend(
+        //     `<p>${data[i].description}</p>`
+        //   )
+      } else {
+        $(".savedResults").prepend(
+          `<div id="dataContainer"><p class='data-entry' data-id='${
+            data[i]._id
+          }'><a href='${data[i].link}' target="_blank">${
+            data[i].title
+          }  </a><span id=delete><i class="fas fa-trash"></i></span>  <span id="note"><i class="fas fa-sticky-note"></i></span></p></div><br>`
+        );
+      }
+    }
+  });
+}
+
+getSavedResults();
+
+// save an article function
+$(document).on("click", "#save", function() {
+  var selected = $(this).parent();
+  $.ajax({
+    type: "GET",
+    url: "/save/" + selected.attr("data-id"),
+
+    success: function(response) {
+      selected.remove();
+      getResults();
+    }
+  });
+});
+
+// delete an article function
+$(document).on("click", "#delete", function() {
+  var selected = $(this).parent();
+  $.ajax({
+    type: "GET",
+    url: "/delete/" + selected.attr("data-id"),
+
+    success: function(response) {
+      console.log(selected);
+      selected.remove();
+      getSavedResults();
+    }
+  });
+});
+
+$(document).on("click", "#note", function() {
+  var selected = $(this).parent();
+  $("#title").empty();
+  $(".hidden").removeClass();
+  console.log(selected.attr("data-id"));
+  $.ajax({
+    type: "GET",
+    url: "/find/" + selected.attr("data-id"),
+    success: function(data) {
+      console.log(data);
+      // Fill the inputs with the data that the ajax call collected
+      console.log(data._id);
+      console.log(data.title);
+      $("#id").val(data._id);
+      $("#title").html(data.title);
+      // $("#action-button").html("<button id='updater' data-id='" + data._id + "'>Update</button>");
+    }
+  });
+});
